@@ -1,2 +1,9 @@
 <p>student works!</p>
 <p>Name: {{ name }}</p>
+<button (click)="changeName()">Change Name</button>
+<img [src]="imageUrl" alt="Student Image" />
+<button [disabled]="isDisabled">Disabled button</button>
+<p>counter: {{ counter }}</p>
+<button (click)="increase()">Increase Counter</button>
+<input [(ngModel)]="nickname" placeholder="Enter nickname" />
+<p>Nickname: {{ nickname }}</p>
