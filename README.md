@@ -12,6 +12,50 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## How Angular starts the app
+
+When you run `ng serve`, Angular CLI starts a development server. In modern Angular projects, this happens through Vite.
+
+The server only prepares the app at this stage. No application code runs in the browser yet.
+
+### What happens step by step
+
+1. You run `ng serve`.
+2. The development server starts and listens on `http://localhost:4200/`.
+3. You open that URL in the browser.
+4. The browser requests `index.html` from `src/index.html`.
+5. The browser then loads the JavaScript bundles generated from your TypeScript files.
+6. The first file that executes is usually the code produced from `src/main.ts`.
+7. `bootstrapApplication(...)` starts Angular and creates the root component.
+8. Angular renders the app inside the root element, usually `app-root`.
+
+### Main files involved
+
+- `src/index.html` is the HTML shell.
+- `src/main.ts` starts the application.
+- `src/app/app.config.ts` registers providers.
+- `src/app/app.ts` contains the root component.
+
+### Simple flow
+
+```text
+ng serve
+	-> development server starts
+	-> browser opens localhost:4200
+	-> index.html is loaded
+	-> JavaScript bundles are downloaded
+	-> main.ts runs
+	-> bootstrapApplication() starts Angular
+	-> App component is created
+	-> app-root gets the UI
+```
+
+### Important idea
+
+The browser does not understand TypeScript directly. The Angular build tooling converts your `.ts` files into JavaScript before the browser runs them.
+
+That is why `index.html` alone is not enough. It becomes useful only after the JavaScript bundles are loaded and Angular starts bootstrapping the app.
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
