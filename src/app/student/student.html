@@ -1,9 +1,32 @@
+@for (course of courses; track course.id) {
+    <p>Course Name: {{ course.name}}</p>
+    <p>Course Description: {{ course.description }}</p>
+    <p>Course Duration: {{ course.duration }}</p>
+}
+
+<p>Add Course by submitting the form</p>
+<form (ngSubmit)="addCourse()">
+    <input type="text" placeholder="Enter course name" [(ngModel)]="courseName" name="name">
+    <input type="text" placeholder="Enter course description" [(ngModel)]="courseDescription" name="description">
+    <input type="text" placeholder="Enter course duration" [(ngModel)]="couresDuration" name="duration">
+    <button type="submit">Add Course</button>
+
 <p>student works!</p>
-<p>Name: {{ name }}</p>
+
 <button (click)="changeName()">Change Name</button>
-<img [src]="imageUrl" alt="Student Image" />
+
 <button [disabled]="isDisabled">Disabled button</button>
 <p>counter: {{ counter }}</p>
 <button (click)="increase()">Increase Counter</button>
 <input [(ngModel)]="nickname" placeholder="Enter nickname" />
 <p>Nickname: {{ nickname }}</p>
+@if (isLogedIn) {
+<p>Name: {{ name }}</p>
+<img [src]="imageUrl" alt="Student Image" />
+<button (click)="logout()">Logout</button>
+}
+@else {
+    <input type="email" placeholder="Enter email" [(ngModel)]="email">
+    <input type="password" placeholder="Enter password" [(ngModel)]="password">
+    <button (click)="setIslogedIn()">Login</button>
+}

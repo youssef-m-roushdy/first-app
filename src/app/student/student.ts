@@ -30,7 +30,54 @@ export class Student {
 
   // two way data binding using ngModel
   nickname = "";
+  
+  isLogedIn = false;
+  email = "";
+  password = "";
+  setIslogedIn = () => {
+    if (this.email  && this.password ) {
+      this.isLogedIn = true;
+    } else {
+      alert("Invalid email or password");
+    }
+  }
 
+  logout = () => {
+    this.isLogedIn = false;
+  }
 
+  courses = [
+    {
+      "id": 1,
+      "name": "Angular",
+      "description": "Angular is a platform for building mobile and desktop web applications.",
+      "duration": "3 months"
+    },
+    {
+      "id": 2,
+      "name": "React",
+      "description": "React is a JavaScript library for building user interfaces.",
+      "duration": "2 months"
+    },
+    {
+      "id": 3,
+      "name": "Vue",
+      "description": "Vue.js is a progressive framework for building user interfaces.",
+      "duration": "1 month"
+    }
+  ];
 
+  courseName = "";
+  courseDescription = "";
+  couresDuration = "";
+
+  addCourse = () => {
+    const newCourse = {
+      "id": this.courses.length + 1,
+      "name": "New Course",
+      "description": "This is a new course.",
+      "duration": "1 month"
+    };
+    this.courses.push(newCourse);
+  }
 }
