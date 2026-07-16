@@ -10,7 +10,7 @@
     <input type="text" placeholder="Enter course description" [(ngModel)]="courseDescription" name="description">
     <input type="text" placeholder="Enter course duration" [(ngModel)]="couresDuration" name="duration">
     <button type="submit">Add Course</button>
-
+</form>
 <p>student works!</p>
 
 <button (click)="changeName()">Change Name</button>
@@ -30,3 +30,15 @@
     <input type="password" placeholder="Enter password" [(ngModel)]="password">
     <button (click)="setIslogedIn()">Login</button>
 }
+
+<p>Student Full Name: {{ studentFullName() }}</p>
+<p>Student Address: {{ studentAddress() }}</p>
+
+<button (click)="delete()">Delete Student</button>
+
+<div>
+    <p>Students Count: {{ students.length }}</p>
+  @for (student of students; track student.id) {
+    <p>Student Name: {{ student.name }} - Email: {{ student.email }}</p>
+  }
+</div>

@@ -180,6 +180,190 @@ disabled="{{ isDisabled }}"
 [disabled]
 ```
 
+## إرسال البيانات من الأب للابن
+
+لو عندنا في `app.html`:
+
+```html
+<app-student [name]="studentName"></app-student>
+```
+
+فإحنا كده بنبعت قيمة من الـ Parent إلى الـ Child.
+
+### نشرحها
+
+```html
+[name]
+```
+
+يعني:
+
+> هبعت قيمة للـ Child اسمها `name`.
+
+---
+
+```ts
+studentName
+```
+
+هو المتغير الموجود في الـ Parent.
+
+---
+
+لو:
+
+```ts
+studentName = "Youssef";
+```
+
+فالـ Child هيستقبل:
+
+```text
+Youssef
+```
+
+## استخدام القيمة داخل الـ Child
+
+داخل `student.html`:
+
+```html
+{{ name() }}
+```
+
+### ليه كتبنا `name()`؟
+
+لأن `input()` في Angular الحديثة بيرجع `Signal`.
+
+فبدل ما نكتب:
+
+```html
+name
+```
+
+بنكتب:
+
+```html
+name()
+```
+
+علشان نجيب القيمة الحالية.
+
+## طيب لو الابن عايز يكلم الأب؟
+
+مثلاً عندك زر **Delete** داخل `StudentComponent`.
+
+ولما المستخدم يضغط عليه، الأب هو اللي يحذف الطالب من القائمة.
+
+هنا نستخدم `output()`.
+
+---
+
+## داخل `student.ts`
+
+```ts
+import { Component, output } from '@angular/core';
+
+@Component({
+  selector: 'app-student',
+  templateUrl: './student.html'
+})
+export class StudentComponent {
+
+  deleteClicked = output<void>();
+
+  delete() {
+    this.deleteClicked.emit();
+  }
+
+}
+```
+
+---
+
+### نشرح أهم سطر
+
+```ts
+deleteClicked = output<void>();
+```
+
+يعني:
+
+> أنا كـ Child عندي حدث اسمه `deleteClicked`، والأب يقدر يسمعه.
+
+---
+
+```ts
+this.deleteClicked.emit();
+```
+
+`emit()` معناها:
+
+> ابعت إشعار للأب إن الحدث حصل.
+
+---
+
+## في `student.html`
+
+```html
+<button (click)="delete()">Delete</button>
+```
+
+---
+
+## في `app.html`
+
+```html
+<app-student (deleteClicked)="onDelete()"></app-student>
+```
+
+لاحظ الفرق:
+
+- `[ ]` لإرسال بيانات للابن.
+- `( )` للاستماع لحدث جاي من الابن.
+
+---
+
+## في `app.ts`
+
+```ts
+onDelete() {
+    console.log("Student Deleted");
+}
+```
+
+لما تضغط الزر:
+
+```text
+ضغط المستخدم
+
+↓
+
+delete()
+
+↓
+
+emit()
+
+↓
+
+App يستقبل الحدث
+
+↓
+
+onDelete()
+```
+
+---
+
+# الفرق بين `input()` و`output()`
+
+```text
+input()     output()
+Parent → Child   Child → Parent
+إرسال بيانات     إرسال أحداث
+نقرأها بـ `name()`   نرسلها بـ `emit()`
+```
+
 ## ثالثاً: Event Binding
 
 ودي معناها: لما يحصل Event نفذ Function.

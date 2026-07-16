@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { StudentService } from '../services/student';
 
 @Component({
   selector: 'app-student',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './student.html',
   styleUrl: './student.css',
 })
-export class Student {
+export class StudentComponent {
+  courses: any[] = [];
+
+  constructor(private studentService: StudentService) {
+    this.courses = this.studentService.getAllSttudentCourses();
+  }
   // interpolation binding using {{ name }}
   name = "Youssef";
 
@@ -46,26 +53,8 @@ export class Student {
     this.isLogedIn = false;
   }
 
-  courses = [
-    {
-      "id": 1,
-      "name": "Angular",
-      "description": "Angular is a platform for building mobile and desktop web applications.",
-      "duration": "3 months"
-    },
-    {
-      "id": 2,
-      "name": "React",
-      "description": "React is a JavaScript library for building user interfaces.",
-      "duration": "2 months"
-    },
-    {
-      "id": 3,
-      "name": "Vue",
-      "description": "Vue.js is a progressive framework for building user interfaces.",
-      "duration": "1 month"
-    }
-  ];
+  
+
 
   courseName = "";
   courseDescription = "";
@@ -80,4 +69,32 @@ export class Student {
     };
     this.courses.push(newCourse);
   }
+
+  studentFullName = input<string>(); // comes from parent component (app.ts) using property binding [studentFullName]="fullName"
+  studentAddress = input<string>();
+
+  deleteClicked = output<void>(); // sends event to parent component (app.ts) using event binding (deleteClicked)="delete()"
+
+  delete() {
+    this.deleteClicked.emit();
+  }
+
+  students: any[] = [];
+
+ ngOnInit() {
+  this.studentService.getStudents().subscribe((data: any[]) => {
+    console.log('Data from API:', data);
+
+    this.students = data;
+
+    console.log('Students after assignment:', this.students);
+    console.log('Length:', this.students.length);
+  });
 }
+}
+
+ 
+
+  
+
+  
