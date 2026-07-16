@@ -34,4 +34,8 @@ export class StudentService {
   getStudents = () => {
     return this.httpClient.get<any[]>('https://jsonplaceholder.typicode.com/users');
   }
+
+  getStudentById = (id: string | null) => {
+    return this.httpClient.get<any>(`https://jsonplaceholder.typicode.com/users/${id}`);
+  }
 }

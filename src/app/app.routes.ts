@@ -12,7 +12,7 @@ export const routes: Routes = [
     },
 
     {
-        path: 'students',
+        path: 'students/:id',
         component: StudentComponent
     },
 
