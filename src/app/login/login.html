@@ -1,0 +1,18 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input formControlName="email" placeholder="Email" />
+    @if(
+
+    loginForm.controls.email.invalid
+
+    ){
+
+    <p>
+
+        Email Required
+
+    </p>
+
+    }
+    <input formControlName="password" type="password" placeholder="Password" />
+    <button type="submit">Login</button>
+</form>
